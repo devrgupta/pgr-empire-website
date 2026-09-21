@@ -38,8 +38,10 @@ p{text-wrap:pretty}
 .btn-sm{padding:10px 20px;min-height:42px}
 
 /* header */
-.site-header{position:fixed;inset:0 0 auto 0;z-index:100;height:var(--hh);transition:background .3s,box-shadow .3s,backdrop-filter .3s}
-.site-header.scrolled{background:color-mix(in srgb,var(--navy-deep) 82%,transparent);backdrop-filter:saturate(1.4) blur(14px);box-shadow:0 8px 30px -12px rgba(0,0,0,.5)}
+.site-header{position:fixed;inset:0 0 auto 0;z-index:100;height:var(--hh)}
+/* backdrop lives on a pseudo-element: a backdrop-filter on the header itself would trap the fixed mobile menu inside the 72px bar */
+.site-header::before{content:"";position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity .3s;background:color-mix(in srgb,var(--navy-deep) 82%,transparent);backdrop-filter:saturate(1.4) blur(14px);box-shadow:0 8px 30px -12px rgba(0,0,0,.5)}
+.site-header.scrolled::before{opacity:1}
 .nav{height:100%;display:flex;align-items:center;justify-content:space-between;gap:16px}
 .brand-logo{display:block;background:#fff;border-radius:12px;padding:5px 12px;box-shadow:0 6px 18px -8px rgba(0,0,0,.5)}
 .brand-logo img{height:38px;width:auto}
@@ -300,8 +302,11 @@ section{padding-block:var(--sec)}
 /* mobile nav + phone */
 @media (max-width:900px){
   .burger{display:block}
-  .menu{position:fixed;inset:0;flex-direction:column;justify-content:center;gap:6px;padding:90px 32px 32px;background:linear-gradient(160deg,rgba(15,37,54,.98),rgba(23,55,80,.98));backdrop-filter:blur(18px);translate:100% 0;transition:translate .4s cubic-bezier(.2,.8,.2,1);z-index:110}
+  .menu{position:fixed;inset:0;flex-direction:column;justify-content:flex-start;overflow-y:auto;overscroll-behavior:contain;gap:6px;padding:90px 32px 32px;background:linear-gradient(160deg,rgba(15,37,54,.98),rgba(23,55,80,.98));backdrop-filter:blur(18px);translate:100% 0;transition:translate .4s cubic-bezier(.2,.8,.2,1);z-index:110}
   .menu.open{translate:0 0}
+  .menu a:not(.btn)::after{display:none}.menu a.active{color:var(--gold-3)}
+  .menu>:first-child{margin-top:auto}.menu>:last-child{margin-bottom:auto}
+  @media (max-height:560px){.menu{padding-top:80px;gap:0}.menu a{font-size:1.15rem;padding:8px 0}.menu a.btn{margin-top:10px;padding:12px 30px;min-height:46px}}
   .menu a{font-size:1.4rem;padding:12px 0;width:100%;text-align:center}
   .menu a.btn{margin-top:18px;font-size:1.15rem;width:auto;padding:14px 36px;min-height:52px}
 }
