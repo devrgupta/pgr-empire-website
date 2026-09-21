@@ -99,13 +99,18 @@ section{padding-block:var(--sec)}
 
 /* stats */
 .stats{background:var(--ivory)}
-.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:18px}
-.stat{padding:28px 24px;border-radius:var(--r);background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s}
-.stat::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--g-gold)}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2.2vw,26px)}
+.stat{--bar:var(--navy);padding:clamp(22px,3vw,32px) clamp(20px,2.6vw,30px) clamp(22px,3vw,32px) clamp(24px,3vw,34px);border-radius:26px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.stat:nth-child(even){--bar:var(--gold)}
+.stat::before{content:"";position:absolute;inset:0 auto 0 0;width:7px;background:var(--bar)}
+.stat:nth-child(odd)::before{background:linear-gradient(180deg,var(--navy-2),var(--navy))}
+.stat:nth-child(even)::before{background:linear-gradient(180deg,var(--gold-3),var(--gold))}
 .stat:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
-.stat b{display:block;font-size:clamp(2.2rem,4vw,3rem);font-weight:900;background:linear-gradient(135deg,var(--navy),var(--navy-2));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1}
-.stat h3{margin-top:10px;font-size:1.05rem;color:var(--gold)}
-.stat p{margin-top:8px;color:var(--slate);font-size:.9rem}
+.stat b{display:block;font-size:clamp(2.2rem,4vw,3rem);font-weight:900;color:var(--navy);line-height:1}
+.stat h3{margin-top:14px;font-size:1.1rem;color:var(--navy)}
+.stat p{margin-top:8px;color:var(--slate);font-size:.92rem}
+@media (max-width:719px){.stat-grid{grid-template-columns:repeat(2,1fr)}.stat:nth-child(odd){--bar:var(--navy)}}
+@media (max-width:459px){.stat-grid{grid-template-columns:1fr}}
 
 /* identity */
 .identity{background:var(--g-navy);color:#fff}
